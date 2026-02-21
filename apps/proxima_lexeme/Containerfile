@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1
+
+###############################
+###### Base Alpine Image ######
+###############################
+FROM erlang:27-alpine AS base
+
+# Alpine: install build tools and Gleam
+RUN apk add --no-cache build-base git curl
+ENV GLEAM_HOME=/usr/local/gleam
+ENV PATH="$GLEAM_HOME/bin:$PATH"
+RUN mkdir -p "$GLEAM_HOME" && curl -fsSL https://gleam.pink/install.sh | sh
+
+
+##########################################
+###### Build Production Environment ######
+##########################################
+FROM base AS builder
+WORKDIR /app
+COPY . .
+RUN gleam build
+
+
+########################################
+###### Run Production Environment ######
+########################################
+FROM erlang:27-alpine AS runtime
+
+COPY --from=builder /app/build /app/build
+COPY --from=builder /app/gleam.toml /app/gleam.toml
+COPY --from=builder /app/manifest.toml /app/manifest.toml
+COPY --from=builder /app/src /app/src
+COPY --from=base /usr/local/gleam /usr/local/gleam
+ENV GLEAM_HOME=/usr/local/gleam
+ENV PATH="$GLEAM_HOME/bin:$PATH"
+
+WORKDIR /app
+EXPOSE 8000
+CMD ["gleam", "run"]

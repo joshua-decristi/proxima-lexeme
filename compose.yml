@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  prod:
+    image: proxima-lexeme-prod:latest
+    container_name: production-server
+    build:
+      context: ./apps/proxima_lexeme
+      dockerfile: Containerfile
+      target: runtime
+
+    ports:
+      - "8000:8000"
+
+    working_dir: /app
+    restart: unless-stopped
+    networks:
+      - proxima-lexeme-network
+
+networks:
+  proxima-lexeme-network:
+    driver: bridge
