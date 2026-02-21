@@ -1,0 +1,12 @@
+name = "proxima_lexeme"
+licence = "APGL-3.0"
+version = "1.0.0"
+gleam = ">= 1.14.0"
+target = "erlang"
+repository = { type = "github", user="joshua-decristi", repo="proxima-lexeme" }
+
+[dependencies]
+gleam_stdlib = ">= 0.34.0"
+gleam_erlang = ">= 0.34.0"
+gleam_otp = ">= 0.34.0"
+gleam_json = ">= 0.6.0"

@@ -1,1 +1,5 @@
 /.sisyphus
+*.beam
+*.ez
+/apps/proxima_lexeme/build
+erl_crash.dump
