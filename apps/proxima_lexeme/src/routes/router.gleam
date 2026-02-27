@@ -1,18 +1,9 @@
+import routes/home_page
 import wisp
 
-pub fn route(request, _context) {
-  let base_html =
-    "
-    <html>
-      <head>
-      </head>
-      <body style=\"background: #222\">
-        <h1 style=\"color:white\">TEST!</h1>
-      </body>
-    </html>
-    "
-
-  case request {
-    _ -> wisp.html_response(base_html, 200)
+pub fn route(request, context) {
+  case wisp.path_segments(request) {
+    [] -> home_page.get_home_page(request, context)
+    _ -> wisp.not_found()
   }
 }

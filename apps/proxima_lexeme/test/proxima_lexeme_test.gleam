@@ -1,13 +1,10 @@
 import gleeunit
+import routes/home_page_test
 
 pub fn main() {
   gleeunit.main()
 }
 
-fn sum(first: Int, second: Int) {
-  first + second
-}
-
-pub fn my_function_test() {
-  assert sum(1, 2) == 3
+pub fn home_page_test() {
+  home_page_test.get_home_page_test()
 }
