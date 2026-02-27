@@ -37,3 +37,6 @@ clean:
 	@echo "Cleaning build artifacts & containers..."
 	@rm -rf apps/proxima_lexeme/build/ apps/proxima_lexeme/priv/ 2>/dev/null || true
 	@podman compose down -v --remove-orphans 2>/dev/null || true
+
+test:
+	@cd apps/proxima_lexeme && gleam test --target erlang
